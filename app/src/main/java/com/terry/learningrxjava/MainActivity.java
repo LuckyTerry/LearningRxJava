@@ -607,8 +607,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void zipping() {
-//        Observable<String> source1 = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
-//        Observable<Integer> source2 = Observable.range(1, 6);
+        Observable<String> source1 = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+        Observable<Integer> source2 = Observable.range(1, 6);
 //        Observable<Boolean> source3 = Observable.just(true, false, true, false, true);
 //        log("------分隔符------");
 //        Observable.zip(Arrays.asList(source1, source2), objects -> objects[0] + "-" + objects[1]).subscribe(printConsumer());
@@ -622,6 +622,11 @@ public class MainActivity extends AppCompatActivity {
 //        Observable.zip(source1, source2, (s, i) -> s + "-" + i, true, 128).subscribe(printConsumer());
 //        log("------分隔符------");
 //        Observable.zip(source1, source2, source3, (s, i, b) -> s + "-" + i + "-" + b).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zipIterable(Arrays.asList(source1, source2), objects -> objects[0] + "-" + objects[1], true, 128).subscribe(printConsumer());
+//        log("------分隔符------");
+//        //noinspection unchecked
+//        Observable.zipArray(objects -> objects[0] + "-" + objects[1], true, 128, source1, source2).subscribe(printConsumer());
 //        log("------分隔符------");
 //        // 4, 5, 6, 7, 8, 9 的重载省略
 //        source1.zipWith(Arrays.asList(1, 2, 3, 4, 5, 6), (s, i) -> s + "-" + i).subscribe(printConsumer());
