@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -55,14 +56,6 @@ public class MainActivity extends AppCompatActivity {
 //        justIterable.add(just7);
 //        justIterable.add(just8);
 //        justIterable.add(just9);
-
-//        Observable.amb(justIterable).subscribe(
-//                integer -> Log.d(TAG, "onCreate: onNext" + integer),
-//                throwable -> Log.d(TAG, "onCreate: onError"));
-//
-//        Observable.ambArray(just1, just2, just3, just4, just5, just6, just7, just8, just9).subscribe(
-//                integer -> Log.d(TAG, "onCreate: onNext" + integer),
-//                throwable -> Log.d(TAG, "onCreate: onError"));
 
 //        Observable<Long> interval1 = Observable.intervalRange(0, 10, 0, 100, TimeUnit.MILLISECONDS)
 //                .flatMap(aLong -> {
@@ -240,10 +233,6 @@ public class MainActivity extends AppCompatActivity {
 //        Observable.just(0, 1, 2, 3, 4).all(integer -> integer < 5).subscribe(printConsumer());
 
 //        Observable.just(0, 1, 2, 3, 4).any(integer -> integer < 1).subscribe(printConsumer());
-
-//        Observable.timer(200, TimeUnit.MILLISECONDS).map(aLong -> 200)
-//                .ambWith(Observable.timer(100, TimeUnit.MILLISECONDS).map(aLong -> 100))
-//                .subscribe(printConsumer());
 
 //        log(Observable.just("0", "1",  "2").as(upstream -> upstream.blockingLast()));
 
@@ -552,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
 //        log("------分隔符------");
 //        Observable.concatEager(Arrays.asList(source1, source2), 128, 128).subscribe(printConsumer());
 //        log("------分隔符------");
-//        Observable.concatDelayError(Arrays.asList(source3, source4))
+//        Observable.concatDelayError(Arrays.ascList(source3, source4))
 //                .subscribe(printConsumer(), errorConsumer());
 //        log("------分隔符------");
 //        Observable.concatDelayError(Observable.just(source3, source4))
@@ -606,11 +595,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ambiguous() {
-
+//        Observable<String> source1 = Observable.timer(500, TimeUnit.MILLISECONDS).map(aLong -> "source1");
+//        Observable<String> source2 = Observable.timer(300, TimeUnit.MILLISECONDS).map(aLong -> "source2");
+//
+//        Observable.amb(Arrays.asList(source1, source2)).subscribe(printConsumer());
+//
+//        //noinspection unchecked
+//        Observable.ambArray(source1, source2).subscribe(printConsumer());
+//
+//        source1.ambWith(source2).subscribe(printConsumer());
     }
 
     private void zipping() {
-
+//        Observable<String> source1 = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+//        Observable<Integer> source2 = Observable.range(1, 6);
+//        Observable<Boolean> source3 = Observable.just(true, false, true, false, true);
+//        log("------分隔符------");
+//        Observable.zip(Arrays.asList(source1, source2), objects -> objects[0] + "-" + objects[1]).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zip(Observable.just(source1, source2), objects -> objects[0] + "-" + objects[1]).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zip(source1, source2, (s, i) -> s + "-" + i).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zip(source1, source2, (s, i) -> s + "-" + i, true).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zip(source1, source2, (s, i) -> s + "-" + i, true, 128).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.zip(source1, source2, source3, (s, i, b) -> s + "-" + i + "-" + b).subscribe(printConsumer());
+//        log("------分隔符------");
+//        // 4, 5, 6, 7, 8, 9 的重载省略
+//        source1.zipWith(Arrays.asList(1, 2, 3, 4, 5, 6), (s, i) -> s + "-" + i).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.zipWith(source2, (s, i) -> s + "-" + i).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.zipWith(source2, (s, i) -> s + "-" + i, true).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.zipWith(source2, (s, i) -> s + "-" + i, true, 128).subscribe(printConsumer());
     }
 
     private void combineLatest() {
