@@ -559,6 +559,7 @@ public class MainActivity extends AppCompatActivity {
         source1.concatMapIterable(s -> Arrays.asList(s.split("")), 2).subscribe(printConsumer());
         source1.concatMapCompletable(s -> Completable.complete()).subscribe(successAction(), errorConsumer());
         source1.concatMapCompletable(s -> Completable.complete(), 2).subscribe(successAction(), errorConsumer());
+
     }
 
     private void ambiguous() {
