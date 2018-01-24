@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.internal.functions.Functions;
+import io.reactivex.observables.GroupedObservable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -639,11 +640,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void combineLatest() {
-
+//        Observable<Long> source1 = Observable.interval(300, TimeUnit.MILLISECONDS).take(10);
+//        Observable<Long> source2 = Observable.interval(1, TimeUnit.SECONDS).take(5);
+//        log("------分隔符------");
+//        Observable.combineLatest(source1, source2,
+//                (l1, l2) -> "SOURCE	1:	" + l1 + "		SOURCE	2:	" + l2)
+//                .subscribe(printConsumer());
+//        log("------分隔符------");
+//        // 与上面不同，不会重复取值
+//        source2.withLatestFrom(source1, (l1, l2) -> "SOURCE	2:	" + l1 + "		SOURCE	1:	" + l2)
+//                .subscribe(printConsumer());
     }
 
     private void grouping() {
-
+//        Observable<String> source = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+//        source.groupBy(String::length).flatMapSingle(Observable::toList).subscribe(printConsumer());
     }
 
     /**
