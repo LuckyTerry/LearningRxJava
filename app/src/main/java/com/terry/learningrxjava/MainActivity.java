@@ -12,6 +12,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.internal.functions.Functions;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -522,44 +523,86 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void concatenation() {
-        Observable<String> source1 = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
-        Observable<String> source2 = Observable.just("Zeta", "Eta", "Theta");
-        Observable.concat(Arrays.asList(source1, source2)).subscribe(printConsumer());
-        Observable.concat(Observable.just(source1, source2)).subscribe(printConsumer());
-        Observable.concat(Observable.just(source1, source2), 128).subscribe(printConsumer());
-        Observable.concat(source1, source2).subscribe(printConsumer());
-        Observable.concat(source1, source2, source1).subscribe(printConsumer());
-        Observable.concat(source1, source2, source1, source2).subscribe(printConsumer());
-        Observable.concatEager(Observable.just(source1, source2)).subscribe(printConsumer());
-        Observable.concatEager(Observable.just(source1, source2), 128, 128).subscribe(printConsumer());
-        Observable.concatEager(Arrays.asList(source1, source2)).subscribe(printConsumer());
-        Observable.concatEager(Arrays.asList(source1, source2), 128, 128).subscribe(printConsumer());
-        Observable.concatDelayError(Arrays.asList(source1, source2)).subscribe(printConsumer());
-        Observable.concatDelayError(Observable.just(source1, source2)).subscribe(printConsumer());
-        Observable.concatDelayError(Observable.just(source1, source2), 128, true).subscribe(printConsumer());
-        source1.concatWith(source2).subscribe(printConsumer());
-        //noinspection unchecked
-        Observable.concatArray(source1, source2, source1, source2).subscribe(printConsumer());
-        //noinspection unchecked
-        Observable.concatArrayEager(source1, source2, source1, source2).subscribe(printConsumer());
-        //noinspection unchecked
-        Observable.concatArrayEager(128, 128, source1, source2, source1, source2).subscribe(printConsumer());
-        //noinspection unchecked
-        Observable.concatArrayDelayError(source1, source2, source1, source2).subscribe(printConsumer());
-
-        source1.concatMap(s -> Observable.fromArray(s.split(""))).subscribe(printConsumer());
-        source1.concatMap(s -> Observable.fromArray(s.split("")), 2).subscribe(printConsumer());
-        source1.concatMapEager(s -> Observable.fromArray(s.split(""))).subscribe(printConsumer());
-        source1.concatMapEager(s -> Observable.fromArray(s.split("")), 128, 2).subscribe(printConsumer());
-        source1.concatMapDelayError(s -> Observable.fromArray(s.split(""))).subscribe(printConsumer());
-        source1.concatMapDelayError(s -> Observable.fromArray(s.split("")), 2, true).subscribe(printConsumer());
-        source1.concatMapEagerDelayError(s -> Observable.fromArray(s.split("")), true).subscribe(printConsumer());
-        source1.concatMapEagerDelayError(s -> Observable.fromArray(s.split("")), 128, 2, true).subscribe(printConsumer());
-        source1.concatMapIterable(s -> Arrays.asList(s.split(""))).subscribe(printConsumer());
-        source1.concatMapIterable(s -> Arrays.asList(s.split("")), 2).subscribe(printConsumer());
-        source1.concatMapCompletable(s -> Completable.complete()).subscribe(successAction(), errorConsumer());
-        source1.concatMapCompletable(s -> Completable.complete(), 2).subscribe(successAction(), errorConsumer());
-
+//        Observable<String> source1 = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+//        Observable<String> source2 = Observable.just("Zeta", "Eta", "Theta");
+//        Observable<Integer> source3 = Observable.just(1, 2, 0, 4, 5)
+//                .map(integer -> 10 / integer);
+//        Observable<Integer> source4 = Observable.just(6, 7, 8)
+//                .map(integer -> 10 / integer);
+//        log("------分隔符------");
+//        Observable.concat(Arrays.asList(source1, source2)).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concat(Observable.just(source1, source2)).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concat(Observable.just(source1, source2), 128).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concat(source1, source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concat(source1, source2, source1).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concat(source1, source2, source1, source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatWith(source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concatEager(Observable.just(source1, source2)).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concatEager(Observable.just(source1, source2), 128, 128).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concatEager(Arrays.asList(source1, source2)).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concatEager(Arrays.asList(source1, source2), 128, 128).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.concatDelayError(Arrays.asList(source3, source4))
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        Observable.concatDelayError(Observable.just(source3, source4))
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        Observable.concatDelayError(Observable.just(source3, source4), 128, true)
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        //noinspection unchecked
+//        Observable.concatArray(source1, source2, source1, source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        //noinspection unchecked
+//        Observable.concatArrayEager(source1, source2, source1, source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        //noinspection unchecked
+//        Observable.concatArrayEager(128, 128, source1, source2, source1, source2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        //noinspection unchecked
+//        Observable.concatArrayDelayError(source3, source4, source3, source4)
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        source1.concatMap(s -> Observable.fromArray(s.split(""))).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatMap(s -> Observable.fromArray(s.split("")), 2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatMapEager(s -> Observable.fromArray(s.split(""))).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatMapEager(s -> Observable.fromArray(s.split("")), 128, 2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable.just(source3, source4).concatMapDelayError(Functions.identity())
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        Observable.just(source3, source4).concatMapDelayError(Functions.identity(), 2, true)
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        Observable.just(source3, source4).concatMapEagerDelayError(Functions.identity(), true)
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        Observable.just(source3, source4)
+//                .concatMapEagerDelayError(Functions.identity(), 128, 2, true)
+//                .subscribe(printConsumer(), errorConsumer());
+//        log("------分隔符------");
+//        source1.concatMapIterable(s -> Arrays.asList(s.split(""))).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatMapIterable(s -> Arrays.asList(s.split("")), 2).subscribe(printConsumer());
+//        log("------分隔符------");
+//        source1.concatMapCompletable(s -> Completable.complete()).subscribe(successAction(), errorConsumer());
+//        log("------分隔符------");
+//        source1.concatMapCompletable(s -> Completable.complete(), 2).subscribe(successAction(), errorConsumer());
+//        log("------分隔符------");
     }
 
     private void ambiguous() {
@@ -1148,7 +1191,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Consumer<? super Throwable> errorConsumer() {
-        return throwable -> log(throwable.getMessage() != null ? throwable.getMessage() : throwable.getClass().getSimpleName());
+        return throwable -> log("error: " + (throwable.getMessage() != null ? throwable.getMessage() : throwable.getClass().getSimpleName()));
     }
 
     private Action successAction() {
