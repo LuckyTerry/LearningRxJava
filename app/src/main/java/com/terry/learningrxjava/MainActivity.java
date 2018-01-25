@@ -4,17 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.internal.functions.Functions;
-import io.reactivex.observables.GroupedObservable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         basicOperators();
 
         combiningObservables();
+
+        multicastRepalyingAndCaching();
     }
 
     private void staticFactory() {
@@ -661,7 +657,281 @@ public class MainActivity extends AppCompatActivity {
      *
      */
     private void multicastRepalyingAndCaching() {
+        understandingMulticasting();
+        automaticConnection();
+        replayingAndCaching();
+        subjects();
+    }
 
+    private void understandingMulticasting() {
+        // multicasting with operators
+//        log("------分隔符------");
+//        Observable<Integer> threeIntegers = Observable.range(1, 3);
+//        threeIntegers.subscribe(i -> log("Observer	One:	" + i));
+//        threeIntegers.subscribe(i -> log("Observer	Two:	" + i));
+//        log("------分隔符------");
+//        ConnectableObservable<Integer> hotThreeIntegers = Observable.range(1, 3).publish();
+//        hotThreeIntegers.subscribe(i -> log("Observer	One:	" + i));
+//        hotThreeIntegers.subscribe(i -> log("Observer	Two:	" + i));
+//        hotThreeIntegers.connect();
+//        log("------分隔符------");
+//        Observable<Integer> threeRandoms1 = Observable.range(1, 3)
+//                .map(i -> new Random().nextInt(100000));
+//        threeRandoms1.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms1.subscribe(i -> log("Observer	2:	" + i));
+//        log("------分隔符------");
+//        ConnectableObservable<Integer> threeInts = Observable.range(1, 3).publish();
+//        Observable<Integer> threeRandoms2 = threeInts.map(i -> new Random().nextInt(100000));
+//        threeRandoms2.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms2.subscribe(i -> log("Observer	2:	" + i));
+//        threeInts.connect();
+//        log("------分隔符------");
+//        ConnectableObservable<Integer> threeRandoms3 = Observable.range(1, 3)
+//                .map(i -> new Random().nextInt(100000)).publish();
+//        threeRandoms3.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms3.subscribe(i -> log("Observer	2:	" + i));
+//        threeRandoms3.connect();
+//        // when to multicast
+//        log("------分隔符------");
+//        ConnectableObservable<Integer> threeRandoms4 = Observable.range(1, 3)
+//                .map(i -> new Random().nextInt(100000)).publish();
+//        threeRandoms4.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms4.reduce(0, (total, next) -> total + next)
+//                .subscribe(i -> log("Observer	2:	" + i));
+//        threeRandoms4.connect();
+    }
+
+    private void automaticConnection() {
+//        // autoConnect()
+//        log("------分隔符------");
+//        Observable<Integer> threeRandoms = Observable.range(1, 3)
+//                .map(i -> new Random().nextInt(100000))
+//                .publish().autoConnect(2);
+//        threeRandoms.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms.reduce(0, (total, next) -> total + next)
+//                .subscribe(i -> log("Observer	2:	" + i));
+//        log("------分隔符------");
+//        Observable<Integer> threeRandoms2 = Observable.range(1, 3)
+//                .map(i -> new Random().nextInt(100000))
+//                .publish().autoConnect(2);
+//        threeRandoms2.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms2.reduce(0, (total, next) -> total + next)
+//                .subscribe(i -> log("Observer	2:	" + i));
+//        threeRandoms2.subscribe(i -> log("Observer	3:	" + i));
+//        log("------分隔符------");
+//        Observable<Integer> threeRandoms3 = Observable.range(1, 3)
+//                .delay(300, TimeUnit.MILLISECONDS)
+//                .map(i -> new Random().nextInt(100000))
+//                .publish().autoConnect(2);
+//        threeRandoms3.subscribe(i -> log("Observer	1:	" + i));
+//        threeRandoms3.reduce(0, (total, next) -> total + next)
+//                .subscribe(i -> log("Observer	2:	" + i));
+//        threeRandoms3.subscribe(i -> log("Observer	3:	" + i));
+//        log("------分隔符------");
+//        Observable<Long> seconds = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(5).publish().autoConnect();
+//        seconds.subscribe(i -> log("Observer	1:	" + i));
+//        Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.subscribe(i -> log("Observer	2:	" + i)));
+//        // refCount() and share()
+//        log("------分隔符------");
+//        Observable<Long> seconds = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(10).publish().refCount();
+//        seconds.take(5).subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.take(2).subscribe(l -> log("Observer	2:	" + l)));
+//        Observable.timer(6000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.take(2).subscribe(l -> log("Observer	3:	" + l)));
+//        log("------分隔符------");
+//        Observable<Long> seconds = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(10).share();
+//        seconds.take(5).subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.take(2).subscribe(l -> log("Observer	2:	" + l)));
+//        Observable.timer(6000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.take(2).subscribe(l -> log("Observer	3:	" + l)));
+    }
+
+    private void replayingAndCaching() {
+//        log("------分隔符------");
+//        Observable<Long> seconds = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(6).replay().autoConnect();
+//        seconds.subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds.subscribe(l -> log("Observer	2:	" + l)));
+//        log("------分隔符------");
+//        Observable<Long> seconds2 = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(6).replay(2).autoConnect();
+//        seconds2.subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds2.subscribe(l -> log("Observer	2:	" + l)));
+//        log("------分隔符------");
+//        Observable<String> source =
+//                Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon")
+//                        .replay(1).autoConnect();
+//        source.subscribe(l -> log("Observer	1:	" + l));
+//        source.subscribe(l -> log("Observer	2:	" + l));
+//        log("------分隔符------");
+//        Observable<String> source2 =
+//                Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon")
+//                        .replay(1).refCount();
+//        source2.subscribe(l -> log("Observer	1:	" + l));
+//        source2.subscribe(l -> log("Observer	2:	" + l));
+//        log("------分隔符------");
+//        Observable<Long> seconds3 =
+//                Observable.interval(300, TimeUnit.MILLISECONDS)
+//                        .take(10).map(l -> (l + 1) * 300)
+//                        .replay(1, TimeUnit.SECONDS)
+//                        .autoConnect();
+//        seconds3.subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(2000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds3.subscribe(l -> log("Observer	2:	" + l)));
+//        log("------分隔符------");
+//        Observable<Long> seconds4 =
+//                Observable.interval(300, TimeUnit.MILLISECONDS)
+//                        .take(10).map(l -> (l + 1) * 300)
+//                        .replay(1, 1, TimeUnit.SECONDS)
+//                        .autoConnect();
+//        seconds4.subscribe(l -> log("Observer	1:	" + l));
+//        Observable.timer(2000, TimeUnit.MILLISECONDS).subscribe(aLong ->
+//                seconds4.subscribe(l -> log("Observer	2:	" + l)));
+//        log("------分隔符------");
+//        Observable<Integer> cachedRollingTotals =
+//                Observable.just(6, 2, 5, 7, 1, 4, 9, 8, 3)
+//                        .scan(0, (total, next) -> total + next)
+//                        .cache();
+//        cachedRollingTotals.subscribe(printConsumer());
+//        log("------分隔符------");
+//        Observable<Integer> cachedRollingTotals2 =
+//                Observable.just(6, 2, 5, 7, 1, 4, 9, 8, 3)
+//                        .scan(0, (total, next) -> total + next)
+//                        .cacheWithInitialCapacity(9);
+//        cachedRollingTotals2.subscribe(printConsumer());
+    }
+
+    private void subjects() {
+        publishSubjects();
+        whenToUseSubjects();
+        whenSubjectsGoWrong();
+        serializingSubjects();
+        behaviorSubject();
+        replaySubject();
+        asyncSubject();
+        unicastSubject();
+    }
+
+    private void publishSubjects() {
+//        log("------分隔符------");
+//        Subject<String> subject = PublishSubject.create();
+//        subject.map(String::length).subscribe(printConsumer());
+//        subject.onNext("Alpha");
+//        subject.onNext("Beta");
+//        subject.onNext("Gamma");
+//        subject.onComplete();
+    }
+
+    private void whenToUseSubjects() {
+//        log("------分隔符------");
+//        Observable<String> source1 = Observable.interval(1, TimeUnit.SECONDS)
+//                .take(5).map(l -> (l + 1) + "	seconds");
+//        Observable<String> source2 = Observable.interval(300, TimeUnit.MILLISECONDS)
+//                .map(l -> ((l + 1) * 300) + "	milliseconds");
+//        Subject<String> subject = PublishSubject.create();
+//        subject.subscribe(printConsumer());
+//        source1.subscribe(subject);
+//        source2.subscribe(subject);
+    }
+
+    private void whenSubjectsGoWrong() {
+//        log("------分隔符------");
+//        Subject<String> subject = PublishSubject.create();
+//        subject.onNext("Alpha");
+//        subject.onNext("Beta");
+//        subject.onNext("Gamma");
+//        subject.onComplete();
+//        subject.map(String::length).subscribe(printConsumer());
+    }
+
+    private void serializingSubjects() {
+//        log("------the thread safe Subject------");
+//        Subject<String> subject = PublishSubject.<String>create().toSerialized();
+    }
+
+    private void behaviorSubject() {
+//        log("------last event is onNext------");
+//        Subject<String> subject = BehaviorSubject.create();
+//        subject.subscribe(s -> log("Observer	1:	" + s), errorConsumer(), completeAction());
+//        subject.onNext("Alpha");
+//        subject.onNext("Beta");
+//        subject.onNext("Gamma");
+//        subject.subscribe(s -> log("Observer	2:	" + s), errorConsumer(), completeAction());
+//        log("------last event is onComplete------");
+//        Subject<String> subject2 = BehaviorSubject.create();
+//        subject2.subscribe(s -> log("Observer	1:	" + s), errorConsumer(), completeAction());
+//        subject2.onNext("Alpha");
+//        subject2.onNext("Beta");
+//        subject2.onNext("Gamma");
+//        subject2.onComplete();
+//        subject2.subscribe(s -> log("Observer	2:	" + s), errorConsumer(), completeAction());
+    }
+
+    private void replaySubject() {
+//        log("------exclude onComplete------");
+//        Subject<String> subject = ReplaySubject.create();
+//        subject.subscribe(s -> log("Observer	1:	" + s), errorConsumer(), completeAction());
+//        subject.onNext("Alpha");
+//        subject.onNext("Beta");
+//        subject.onNext("Gamma");
+//        subject.subscribe(s -> log("Observer	2:	" + s), errorConsumer(), completeAction());
+//        log("------include onComplete------");
+//        Subject<String> subject2 = ReplaySubject.create();
+//        subject2.subscribe(s -> log("Observer	1:	" + s), errorConsumer(), completeAction());
+//        subject2.onNext("Alpha");
+//        subject2.onNext("Beta");
+//        subject2.onNext("Gamma");
+//        subject2.onComplete();
+//        subject2.subscribe(s -> log("Observer	2:	" + s), errorConsumer(), completeAction());
+    }
+
+    private void asyncSubject() {
+//        log("------wrong------");
+//        Subject<String> subject = AsyncSubject.create();
+//        subject.subscribe(s -> log("Observer	1:	" + s), errorConsumer());
+//        subject.onNext("Alpha");
+//        subject.onNext("Beta");
+//        subject.onNext("Gamma");
+//        subject.subscribe(s -> log("Observer	2:	" + s), errorConsumer());
+//        log("------correct out of onComplete invoked------");
+//        Subject<String> subject2 = AsyncSubject.create();
+//        subject2.subscribe(s -> log("Observer	1:	" + s), errorConsumer());
+//        subject2.onNext("Alpha");
+//        subject2.onNext("Beta");
+//        subject2.onNext("Gamma");
+//        subject2.onComplete();
+//        subject2.subscribe(s -> log("Observer	2:	" + s), errorConsumer());
+    }
+
+    private void unicastSubject() {
+//        log("------only work with one Observer------");
+//        Subject<String> subject = UnicastSubject.create();
+//        Observable.interval(300, TimeUnit.MILLISECONDS)
+//                .take(15)
+//                .map(l -> ((l + 1) * 300) + "	milliseconds")
+//                .subscribe(subject);
+//        Observable.timer(2000, TimeUnit.MILLISECONDS).subscribe(
+//                aLong -> subject.subscribe(s -> log("Observer	1:	" + s)));
+//        log("------work with multiple Observer and ignore missed emissions------");
+//        Subject<String> subject2 = UnicastSubject.create();
+//        Observable.interval(300, TimeUnit.MILLISECONDS)
+//                .take(17)
+//                .map(l -> ((l + 1) * 300) + "	milliseconds")
+//                .subscribe(subject2);
+//        Observable.timer(2000, TimeUnit.MILLISECONDS).subscribe(aLong -> {
+//            Observable<String> multicast = subject2.publish().autoConnect();
+//            multicast.subscribe(s -> log("Observer	1:	" + s));
+//            Observable.timer(2000, TimeUnit.MILLISECONDS).subscribe(
+//                    aLong1 -> multicast.subscribe(s -> log("Observer	2:	" + s)));
+//        });
     }
 
     /**
@@ -1288,6 +1558,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void log(String msg) {
         Log.d(TAG, msg);
+    }
+
+    private void sleep(long duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
 
